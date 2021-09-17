@@ -30,25 +30,29 @@ def write_data(sec: int):
         with open('data.txt', 'r') as file:
             for line in file:
                 if line[0].isdigit():
-                    line = line.replace("WAIT...", "")
-                    res = regex.findall(line)
-                    now = datetime.datetime.now()
-                    records = [
-                        {
-                            'date': now.strftime("%Y-%m-%d"),
-                            'time': now.strftime("%H:%M"),
-                            'voltage': res[0][4],
-                            'current': res[0][3],
-                            'battery': res[0][2]
+                    try:
+                        line = line.replace("WAIT...", "")
+                        res = regex.findall(line)
+                        now = datetime.datetime.now()
+                        records = [
+                            {
+                                'date': now.strftime("%Y-%m-%d"),
+                                'time': now.strftime("%H:%M"),
+                                'voltage': res[0][4],
+                                'current': res[0][3],
+                                'battery': res[0][2]
+                            }
+                        ]
+                        data = {
+                            'params': 'insert-data',
+                            'records': records,
+                            'device': res[0][1]
                         }
-                    ]
-                    requests.post('http://tomas.pgn-solution.co.id:14000/device/smart-tb', json={
-                        'params': 'insert-data',
-                        'records': records,
-                        'device': res[0][1]
-                    })
-                    print(records)
-                    print("end")
+                        requests.post('http://tomas.pgn-solution.co.id:14000/device/smart-tb', json=data)
+                        print(data)
+                        print("end")
+                    except IndexError as error:
+                        print(error)
         os.remove('data.txt')
         print("end")
 
