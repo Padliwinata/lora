@@ -15,8 +15,9 @@ with open('token.txt', 'a') as file:
     while True:
         try:
             value = ser.readline().decode('UTF-8')
-            file.write(value)
-            print(value)
+            # file.write(value)
+            if value[0].isdigit():
+                print(value)
             # ser_bytes = ser.readline()
             # decoded_bytes = str(ser_bytes[0:len(ser_bytes)-2].decode('latin-1'))
             # print(decoded_bytes)
