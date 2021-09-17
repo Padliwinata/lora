@@ -48,11 +48,11 @@ def write_data(sec: int):
                                 'records': records,
                                 'device': res[0][1]
                             }
-                            # print(res)
+                            print(data)
 
         # response = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
         # if response.status_code == 200:
-        print(data)
+        # print(data)
         os.remove('data.txt')
         print()
 
