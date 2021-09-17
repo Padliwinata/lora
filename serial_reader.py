@@ -11,7 +11,7 @@ try:
 except SerialException as e:
     print(e)
 
-with open('dataFile.txt', 'a') as file:
+with open('token.txt', 'a') as file:
     while True:
         try:
             value = ser.readline().decode('UTF-8')
