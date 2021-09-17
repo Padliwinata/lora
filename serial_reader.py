@@ -23,6 +23,7 @@ def write_data(sec: int):
             value = ser.readline().decode('UTF-8')
             file.write(value)
         file.close()
+        print("write")
 
 
 if __name__ == "__main__":
