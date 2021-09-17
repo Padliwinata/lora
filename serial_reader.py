@@ -53,7 +53,7 @@ def write_data(sec: int):
         # if response.status_code == 200:
         # print(records)
         os.remove('data.txt')
-        # print("end")
+        print()
 
 
 if __name__ == "__main__":
