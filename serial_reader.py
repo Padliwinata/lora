@@ -24,3 +24,6 @@ def write_data(sec: int):
             file.write(value)
         file.close()
 
+
+if __name__ == "__main__":
+    write_data(30)
