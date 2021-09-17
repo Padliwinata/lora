@@ -44,14 +44,14 @@ def write_data(sec: int):
                                 'battery': res[0][2]
                             })
                             # print(res)
-        # data = {
-        #     'params': 'insert-data',
-        #     'records': records,
-        #     'device': res[0][1]
-        # }
+        data = {
+            'params': 'insert-data',
+            'records': records,
+            'device': res[0][1]
+        }
         # response = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
         # if response.status_code == 200:
-        print(records)
+        print(data)
         os.remove('data.txt')
         print()
 
