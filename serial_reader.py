@@ -14,8 +14,8 @@ except SerialException as e:
 
 
 def write_data(sec: int):
-    timeout = time.time() + sec
     while True:
+        timeout = time.time() + sec
         file = open('data.txt', 'a')
         while True:
             if time.time() > timeout:
