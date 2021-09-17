@@ -48,7 +48,7 @@ def write_data(sec: int):
                             'records': records,
                             'device': res[0][1]
                         }
-                        requests.post('http://tomas.pgn-solution.co.id:14000/device/smart-tb', json=data)
+                        requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
                         print(data)
                         print("end")
                     except IndexError as error:
