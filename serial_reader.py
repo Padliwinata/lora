@@ -16,6 +16,7 @@ with open('token.txt', 'a') as file:
         try:
             value = ser.readline().decode('UTF-8')
             # file.write(value)
+            value = str(value)
             if value[0].isdigit():
                 print('Fetched')
                 print(value)
