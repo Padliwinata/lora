@@ -49,7 +49,8 @@ def write_data(sec: int):
             'device': res[0][1]
         }
         response = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
-        os.remove('data.txt')
+        if response.status_code == 200:
+            os.remove('data.txt')
         print("end")
 
 
