@@ -42,7 +42,8 @@ def write_data(sec: int):
                         #     'current': res[0][3],
                         #     'battery': res[0][2]
                         # })
-                        print(res)
+                        if len(res) != 0:
+                            print(res)
         # data = {
         #     'params': 'insert-data',
         #     'records': records,
