@@ -1,4 +1,5 @@
 import re
+import time
 
 import serial
 from serial.serialutil import SerialException
@@ -11,21 +12,15 @@ try:
 except SerialException as e:
     print(e)
 
-with open('token.txt', 'a') as file:
+
+def write_data(sec: int):
+    timeout = time.time() + sec
     while True:
-        try:
+        file = open('data.txt', 'a')
+        while True:
+            if time.time() > timeout:
+                break
             value = ser.readline().decode('UTF-8')
             file.write(value)
-            # value = str(value)
-            # if value[0].isdigit():
-            #     print('Fetched')
-            #     print(value)
-            #     print()
-            # else:
-            #     print(value)
-            # ser_bytes = ser.readline()
-            # decoded_bytes = str(ser_bytes[0:len(ser_bytes)-2].decode('latin-1'))
-            # print(decoded_bytes)
-        except KeyboardInterrupt:
-            print("Keyboard Interrupt")
-            break
+        file.close()
+
