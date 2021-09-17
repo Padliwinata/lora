@@ -1,6 +1,8 @@
 import re
 import time
 import os
+import requests
+import datetime
 
 import serial
 from serial.serialutil import SerialException
@@ -30,9 +32,24 @@ def write_data(sec: int):
                 if line[0].isdigit():
                     line = line.replace("WAIT...", "")
                     res = regex.findall(line)
-                    print(res)
+                    now = datetime.datetime.now()
+                    records = [
+                        {
+                            'date': now.strftime("%Y-%m-%d"),
+                            'time': now.strftime("%H:%M"),
+                            'voltage': res[0][4],
+                            'current': res[0][3],
+                            'battery': res[0][2]
+                        }
+                    ]
+                    requests.post('http://tomas.pgn-solution.co.id:14000/device/smart-tb', json={
+                        'params': 'insert-data',
+                        'records': records,
+                        'device': res[0][1]
+                    })
+                    print(records)
         os.remove('data.txt')
-        print()
+        print("sent")
 
 
 if __name__ == "__main__":
