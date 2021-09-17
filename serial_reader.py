@@ -35,14 +35,14 @@ def write_data(sec: int):
                         line = line.replace("WAIT...", "")
                         res = regex.findall(line)
                         now = datetime.datetime.now()
-                        records.append({
-                            'date': now.strftime("%Y-%m-%d"),
-                            'time': now.strftime("%H:%M"),
-                            'voltage': res[0][4],
-                            'current': res[0][3],
-                            'battery': res[0][2]
-                        })
-                        print("end")
+                        # records.append({
+                        #     'date': now.strftime("%Y-%m-%d"),
+                        #     'time': now.strftime("%H:%M"),
+                        #     'voltage': res[0][4],
+                        #     'current': res[0][3],
+                        #     'battery': res[0][2]
+                        # })
+                        print(res)
         # data = {
         #     'params': 'insert-data',
         #     'records': records,
@@ -50,7 +50,7 @@ def write_data(sec: int):
         # }
         # response = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
         # if response.status_code == 200:
-        print(records)
+        # print(records)
         os.remove('data.txt')
         # print("end")
 
