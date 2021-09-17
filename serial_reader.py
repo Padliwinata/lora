@@ -21,6 +21,7 @@ def write_data(sec: int):
             if time.time() > timeout:
                 break
             value = ser.readline().decode('UTF-8')
+            value.rstrip()
             file.write(value)
         file.close()
         print("write")
