@@ -48,8 +48,9 @@ def write_data(sec: int):
                         'device': res[0][1]
                     })
                     print(records)
+                    print("end")
         os.remove('data.txt')
-        print("sent")
+        print("end")
 
 
 if __name__ == "__main__":
