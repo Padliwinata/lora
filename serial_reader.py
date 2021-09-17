@@ -1,5 +1,6 @@
 import re
 import time
+import os
 
 import serial
 from serial.serialutil import SerialException
@@ -24,8 +25,15 @@ def write_data(sec: int):
             value.rstrip()
             file.write(value)
         file.close()
-        print("write")
+        with open('data.txt', 'r') as file:
+            for line in file:
+                if line[0].isdigit():
+                    line = line.replace("WAIT...", "")
+                    res = regex.findall(line)
+                    print(res)
+        os.remove('data.txt')
+        print()
 
 
 if __name__ == "__main__":
-    write_data(5)
+    write_data(10)
