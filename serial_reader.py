@@ -28,7 +28,16 @@ def write_data(sec: int):
     file.close()
 
 
-def send_data():
+def send_data(sec: int):
+    timeout = time.time() + sec
+    while True:
+        file = open('data.txt', 'a')
+        if time.time() > timeout:
+            break
+        value = ser.readline().decode('UTF-8')
+        value.rstrip()
+        file.write(value)
+    file.close()
     while True:
         datas = []
         with open('data.txt', 'r') as file:
@@ -50,7 +59,7 @@ def send_data():
                                 },
                                 'device': res[0][1]
                             }
-                            datas.append()
+                            # datas.append()
                             print(data)
 
         # response = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
@@ -61,4 +70,5 @@ def send_data():
 
 
 if __name__ == "__main__":
-    write_data(10)
+    while True:
+        send_data(10)
