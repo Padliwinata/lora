@@ -17,17 +17,20 @@ except SerialException as e:
 
 
 def write_data(sec: int):
+    timeout = time.time() + sec
+    file = open('data.txt', 'a')
     while True:
-        timeout = time.time() + sec
-        file = open('data.txt', 'a')
-        while True:
-            if time.time() > timeout:
-                break
-            value = ser.readline().decode('UTF-8')
-            value.rstrip()
-            file.write(value)
-        file.close()
-        records = []
+        if time.time() > timeout:
+            break
+        value = ser.readline().decode('UTF-8')
+        value.rstrip()
+        file.write(value)
+    file.close()
+
+
+def send_data():
+    while True:
+        datas = []
         with open('data.txt', 'r') as file:
             for line in file:
                 if line:
@@ -36,18 +39,18 @@ def write_data(sec: int):
                         res = regex.findall(line)
                         now = datetime.datetime.now()
                         if len(res) != 0:
-                            records.append({
-                                'date': now.strftime("%Y-%m-%d"),
-                                'time': now.strftime("%H:%M"),
-                                'voltage': res[0][4],
-                                'current': res[0][3],
-                                'battery': res[0][2]
-                            })
                             data = {
                                 'params': 'insert-data',
-                                'records': records,
+                                'records': {
+                                    'date': now.strftime("%Y-%m-%d"),
+                                    'time': now.strftime("%H:%M"),
+                                    'voltage': res[0][4],
+                                    'current': res[0][3],
+                                    'battery': res[0][2]
+                                },
                                 'device': res[0][1]
                             }
+                            datas.append()
                             print(data)
 
         # response = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
@@ -58,4 +61,4 @@ def write_data(sec: int):
 
 
 if __name__ == "__main__":
-    write_data(30)
+    write_data(10)
