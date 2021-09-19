@@ -11,7 +11,7 @@ from serial.serialutil import SerialException
 regex = re.compile(r"((\d)\sV(\d+\.\d)\s+A(\d+\.\d)\s+B(\d+\.\d))")
 
 try:
-    ser = serial.Serial('/dev/ttyUSB0')
+    ser = serial.Serial('COM5')
     ser.flushInput()
 except SerialException as e:
     print(e)
