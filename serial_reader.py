@@ -1,7 +1,9 @@
 import datetime
+import json
 import os
 import re
 import requests
+from requests import ConnectionError
 import time
 
 import serial
@@ -10,11 +12,14 @@ from serial.serialutil import SerialException
 
 regex = re.compile(r"((\d)\sV(\d+\.\d)\s+A(\d+\.\d)\s+B(\d+\.\d))")
 
-try:
-    ser = serial.Serial('COM5')
-    ser.flushInput()
-except SerialException as e:
-    print(e)
+while True:
+    try:
+        ser = serial.Serial('COM5')
+        ser.flushInput()
+        break
+    except SerialException as e:
+        print(e)
+        continue
 
 
 def read_and_send(sec: int):
@@ -27,6 +32,7 @@ def read_and_send(sec: int):
             value = ser.readline().decode('utf-8')
             file.write(value)
         file.close()
+        success = False
         with open('gateway_data.txt', 'r') as file:
             for line in file:
                 if line[0].isdigit():
@@ -51,9 +57,21 @@ def read_and_send(sec: int):
                             ],
                             'device': str(res[0][1])
                         }
-                        requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
-        os.remove('gateway_data.txt')
-        print('sent')
+                        while True:
+                            try:
+                                res = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
+                                res = json.loads(res.content)
+                                if res['success'] == 'true':
+                                    success = True
+                                break
+                            except ConnectionError:
+                                continue
+
+        if success:
+            os.remove('gateway_data.txt')
+            print('sent')
+        else:
+            print('failed')
         print()
 
 
