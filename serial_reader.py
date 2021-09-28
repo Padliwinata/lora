@@ -32,7 +32,6 @@ def read_and_send(sec: int):
             value = ser.readline().decode('utf-8')
             file.write(value)
         file.close()
-        success = False
         with open('gateway_data.txt', 'r') as file:
             for line in file:
                 if line[0].isdigit():
@@ -57,22 +56,10 @@ def read_and_send(sec: int):
                             ],
                             'device': str(res[0][1])
                         }
-                        while True:
-                            try:
-                                res = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
-                                res = json.loads(res.content)
-                                if res['success'] == 'true':
-                                    success = True
-                                break
-                            except ConnectionError:
-                                continue
 
-        if success:
-            os.remove('gateway_data.txt')
-            print('sent')
-        else:
-            print('failed')
-        print()
+                        res = requests.post('http://tomas.pgn-solution.co.id:14000/api/public/device/smart-tb', json=data)
+        os.remove('gateway_data.txt')
+        print(res.content)
 
 
 if __name__ == '__main__':
